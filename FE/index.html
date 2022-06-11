@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <h1>Add products</h1>
+        <input type="text" name="" id="id"><br>
+        <input type="text" name="" id="name"><br>
+        <input type="text" name="" id="price"><br>
+        <button onclick="addProducts()">POST</button>
+    </div>
+    <div>
+        <input type="text" name="" id="delete_id">
+        <button onclick="deleteproduct()">DELETE</button>
+    </div>
+    <div>
+        <input type="text" name="" id="update_id">
+        <button onclick="updateproduct()">PATCH</button>
+    </div>
+    <div>
+        <input type="text" name="" id="update_id">
+        <button onclick="putproduct()">PUT</button>
+    </div>
+    
+</body>
+</html>
+<script>
+   async function addProducts(){
+    const data={
+        id:document.getElementById("id").value,
+        name:document.getElementById("name").value,
+        price:document.getElementById("price").value
+    }
+    //now store data in db.json
+    let response=await fetch("http://localhost:3000/api/products",{
+method:"POST",
+body:JSON.stringify(data),
+headers:{"content-Type":"application/json"},
+    });
+    let Data=await response.json();
+
+    }
+
+    async function deleteproduct(){
+        let id=document.getElementById("delete_id").value;
+        let response=await fetch(`http://localhost:3000/api/products/${id}`,{
+            method:"DELETE",
+            headers:{"content-Type":"application/json"},
+
+        });
+        let data=await response.json();
+        console.log("data:",data);
+    }
+    async function updateproduct(){
+        let id=document.getElementById("update_id").value;
+        
+        let response=await fetch(`http://localhost:3000/api/products/${id}`,{
+            method:"PATCH",
+            body:JSON.stringify({
+                name:'sunil'
+            }),
+            headers:{"content-Type":"application/json"},
+
+        });
+        let data=await response.json();
+        console.log("data:",data);
+    }
+    async function putproduct(){
+        let id=document.getElementById("update_id").value;
+        
+        let response=await fetch(`http://localhost:3000/api/products/${id}`,{
+            method:"PUT",
+            body:JSON.stringify({
+                name:'sunil'
+            }),
+            headers:{"content-Type":"application/json"},
+
+        });
+        let data=await response.json();
+        console.log("data:",data);
+    }
+
+
+
+</script>
